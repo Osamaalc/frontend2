@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import { BookOpen, Edit } from 'lucide-react';
+import { BookOpen, Edit, Calendar, Star } from 'lucide-react';
 import './ProfileHeader.css';
 
-const ProfileHeader = ({ name, image }) => {
-    // Default academic avatar for university books website
+const ProfileHeader = ({ name, image, role, university, memberSince }) => {
+    // Default academic avatar
     const defaultAvatar = "/api/placeholder/256/256";
-
-    // You can replace the above line with a path to a real local image like:
-    // const defaultAvatar = "/images/academic-avatar.png";
-
     const [imageLoading, setImageLoading] = useState(true);
 
     const handleImageLoad = () => {
@@ -19,6 +15,13 @@ const ProfileHeader = ({ name, image }) => {
         // If the custom image fails to load, use the default image
         setImageLoading(false);
         e.target.onerror = null; // Prevent error loop
+    };
+
+    // Format member since date
+    const formatMemberDate = (dateString) => {
+        if (!dateString) return '';
+        const options = { year: 'numeric', month: 'long' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
     };
 
     return (
@@ -47,13 +50,47 @@ const ProfileHeader = ({ name, image }) => {
                         className="edit-image-button"
                         aria-label="Change profile picture"
                     >
-                        <BookOpen size={16} />
+                        <Edit size={16} />
                     </button>
                 </div>
 
                 <div className="profile-info">
                     <div className="profile-name-wrapper">
                         <h1 className="profile-name">{name || 'New Student'}</h1>
+                        <div className="profile-badges">
+                            <span className="profile-badge role">{role || 'Student'}</span>
+                            {university && <span className="profile-badge university">{university}</span>}
+                        </div>
+                    </div>
+
+                    <div className="profile-stats">
+                        <div className="stat-item">
+                            <div className="stat-icon">
+                                <BookOpen size={18} />
+                            </div>
+                            <div className="stat-info">
+                                <span className="stat-value">3</span>
+                                <span className="stat-label">Active Books</span>
+                            </div>
+                        </div>
+                        <div className="stat-item">
+                            <div className="stat-icon">
+                                <Calendar size={18} />
+                            </div>
+                            <div className="stat-info">
+                                <span className="stat-value">25</span>
+                                <span className="stat-label">Days Active</span>
+                            </div>
+                        </div>
+                        <div className="stat-item">
+                            <div className="stat-icon">
+                                <Star size={18} />
+                            </div>
+                            <div className="stat-info">
+                                <span className="stat-value">Pro</span>
+                                <span className="stat-label">Access Level</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="profile-actions-row">
@@ -61,6 +98,10 @@ const ProfileHeader = ({ name, image }) => {
                             <Edit size={16} className="edit-icon" />
                             <span>Edit Profile</span>
                         </button>
+                        <div className="member-since">
+                            <span className="member-label">Member since:</span>
+                            <span className="member-date">{formatMemberDate(memberSince)}</span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -12,8 +12,8 @@ const Header = ({ isDarkMode, toggleTheme }) => {
     // عناصر التنقل
     const navItems = [
         { name: 'Home', href: '/', hasDropdown: false },
-        { name: 'About Us', href: '#', hasDropdown: false },
-        { name: 'Contact', href: '#', hasDropdown: false },
+        { name: 'About Us', href: '/about', hasDropdown: false },
+        { name: 'Contact', href: '/contact', hasDropdown: false },
     ];
 
     // التعامل مع حدث التمرير
