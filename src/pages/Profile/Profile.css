@@ -1,0 +1,96 @@
+.profile-page {
+    padding: 2rem 0;
+    min-height: calc(100vh - 150px); /* مساحة للهيدر والفوتر */
+    background-color: #f8f9fa;
+    transition: background-color 0.3s ease;
+}
+
+.profile-page.dark {
+    background-color: #1a1a1a;
+    color: #f8f9fa;
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.profile-content {
+    margin-top: 2rem;
+}
+
+.profile-tabs {
+    display: flex;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 2rem;
+    transition: border-color 0.3s ease;
+}
+
+.dark .profile-tabs {
+    border-bottom-color: #444;
+}
+
+.profile-tabs button {
+    border: none;
+    background: transparent;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #495057;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.dark .profile-tabs button {
+    color: #b0b0b0;
+}
+
+.profile-tabs button:hover {
+    color: #007bff;
+}
+
+.profile-tabs button.active {
+    color: #007bff;
+    font-weight: 600;
+}
+
+.dark .profile-tabs button.active {
+    color: #56a5ff;
+}
+
+.profile-tabs button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #007bff;
+}
+
+.dark .profile-tabs button.active::after {
+    background-color: #56a5ff;
+}
+
+.tab-content {
+    min-height: 400px;
+}
+
+/* تنسيقات للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .profile-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .profile-tabs button {
+        padding: 1rem 1rem;
+    }
+
+    .profile-container {
+        padding: 0 1rem;
+    }
+}
