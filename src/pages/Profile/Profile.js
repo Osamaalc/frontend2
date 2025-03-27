@@ -5,9 +5,9 @@ import {
 import ProfileHeader from '../../components/profile/ProfileHeader';
 import PersonalInfo from '../../components/profile/PersonalInfo';
 import AccountSettings from '../../components/profile/AccountSettings';
-import BookshelfSection from '../../components/profile/BookshelfSection';
 import RequestHistory from '../../components/profile/RequestHistory';
 import './Profile.css';
+import BookshelfSection from "../../components/profile/BookshelfSection";
 
 const Profile = ({ isDarkMode }) => {
     const [activeTab, setActiveTab] = useState('personal');
@@ -29,11 +29,46 @@ const Profile = ({ isDarkMode }) => {
         role: 'Student',
         memberSince: '2022-03-15',
         bookshelf: [
-            { id: 1, title: 'Introduction to Algorithms', author: 'Thomas H. Cormen', lastAccessed: '2023-03-10', progress: 65 },
-            { id: 2, title: 'Artificial Intelligence: A Modern Approach', author: 'Stuart Russell', lastAccessed: '2023-03-15', progress: 30 },
-            { id: 3, title: 'Database Systems: The Complete Book', author: 'Hector Garcia-Molina', lastAccessed: '2023-02-28', progress: 100 },
-            { id: 4, title: 'Clean Code: A Handbook of Agile Software Craftsmanship', author: 'Robert C. Martin', lastAccessed: '2023-03-01', progress: 45 },
-            { id: 5, title: 'Design Patterns: Elements of Reusable Object-Oriented Software', author: 'Erich Gamma', lastAccessed: '2023-02-15', progress: 80 },
+            {
+                id: 1,
+                title: 'Introduction to Algorithms',
+                author: 'Thomas H. Cormen',
+                lastAccessed: '2023-03-10',
+                progress: 65,
+                coverColor: "#4299e1"
+            },
+            {
+                id: 2,
+                title: 'Artificial Intelligence: A Modern Approach',
+                author: 'Stuart Russell',
+                lastAccessed: '2023-03-15',
+                progress: 30,
+                coverColor: "#9f7aea"
+            },
+            {
+                id: 3,
+                title: 'Database Systems: The Complete Book',
+                author: 'Hector Garcia-Molina',
+                lastAccessed: '2023-02-28',
+                progress: 100,
+                coverColor: "#48bb78"
+            },
+            {
+                id: 4,
+                title: 'Clean Code: A Handbook of Agile Software Craftsmanship',
+                author: 'Robert C. Martin',
+                lastAccessed: '2023-03-01',
+                progress: 45,
+                coverColor: "#ed8936"
+            },
+            {
+                id: 5,
+                title: 'Design Patterns: Elements of Reusable Object-Oriented Software',
+                author: 'Erich Gamma',
+                lastAccessed: '2023-02-15',
+                progress: 80,
+                coverColor: "#f56565"
+            },
         ],
         requestHistory: [
             { id: 'REQ-2023-001', bookTitle: 'Machine Learning: A Probabilistic Perspective', requestDate: '2023-03-01', status: 'Approved', approvalDate: '2023-03-02' },
@@ -129,7 +164,7 @@ const Profile = ({ isDarkMode }) => {
                                 )}
 
                                 {activeTab === 'bookshelf' && (
-                                    <BookshelfSection bookshelfData={userData.bookshelf} />
+                                    <BookshelfSection books={userData.bookshelf} isDarkMode={isDarkMode} />
                                 )}
 
                                 {activeTab === 'requests' && (
