@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Book, Search, Grid, List,
     ChevronRight, Clock, BookOpen,
-    Filter
+    Filter, Star, Download, Eye,
+    Calendar, AlertCircle
 } from 'lucide-react';
 import './BookshelfSection.css';
 
@@ -11,12 +12,24 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
     const [viewMode, setViewMode] = useState('grid');
     const [searchQuery, setSearchQuery] = useState('');
     const [sortBy, setSortBy] = useState('recent');
+    const [showFilters, setShowFilters] = useState(false);
+    const [filters, setFilters] = useState({
+        progress: 'all', // all, inProgress, completed
+        readingStatus: 'all' // all, current, toRead, finished
+    });
 
     // Filter and sort books
-    const filteredBooks = books.filter(book =>
-        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.author.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredBooks = books.filter(book => {
+        const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            book.author.toLowerCase().includes(searchQuery.toLowerCase());
+
+        const matchesProgress = filters.progress === 'all' ||
+            (filters.progress === 'completed' && book.progress === 100) ||
+            (filters.progress === 'inProgress' && book.progress < 100);
+
+        // Apply additional filters as needed
+        return matchesSearch && matchesProgress;
+    });
 
     const sortedBooks = [...filteredBooks].sort((a, b) => {
         switch(sortBy) {
@@ -38,8 +51,19 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
         return new Date(dateString).toLocaleDateString('en-US', options);
     };
 
+    // Handle book actions
+    const handleContinueReading = (bookId) => {
+        console.log('Continue reading book ID:', bookId);
+        // Implement navigation to reading interface
+    };
+
+    const handleDownload = (bookId) => {
+        console.log('Download book ID:', bookId);
+        // Implement download functionality
+    };
+
     return (
-        <div className={`bookshelf-container ${isDarkMode ? 'dark' : ''}`}>
+        <div className={`bookshelf-section ${isDarkMode ? 'dark' : ''}`}>
             <div className="bookshelf-header">
                 <div className="bookshelf-title-section">
                     <div className="bookshelf-icon">
@@ -48,7 +72,7 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
                     <div>
                         <h2 className="bookshelf-title">My Bookshelf</h2>
                         <p className="bookshelf-subtitle">
-                            Your collection of books and reading materials
+                            Your personal collection of academic resources
                         </p>
                     </div>
                 </div>
@@ -66,9 +90,17 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
                         />
                     </div>
 
+                    {/* Advanced Filters Toggle */}
+                    <button
+                        className={`filter-toggle ${showFilters ? 'active' : ''}`}
+                        onClick={() => setShowFilters(!showFilters)}
+                    >
+                        <Filter size={16} />
+                        <span>Filters</span>
+                    </button>
+
                     {/* Sort Options */}
                     <div className="sort-container">
-                        <Filter size={16} className="sort-icon" />
                         <select
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
@@ -101,6 +133,65 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
                 </div>
             </div>
 
+            {/* Advanced Filters Panel */}
+            {showFilters && (
+                <div className="advanced-filters">
+                    <div className="filter-group">
+                        <h3 className="filter-group-title">Progress</h3>
+                        <div className="filter-options">
+                            <button
+                                className={`filter-option ${filters.progress === 'all' ? 'active' : ''}`}
+                                onClick={() => setFilters({...filters, progress: 'all'})}
+                            >
+                                All
+                            </button>
+                            <button
+                                className={`filter-option ${filters.progress === 'inProgress' ? 'active' : ''}`}
+                                onClick={() => setFilters({...filters, progress: 'inProgress'})}
+                            >
+                                In Progress
+                            </button>
+                            <button
+                                className={`filter-option ${filters.progress === 'completed' ? 'active' : ''}`}
+                                onClick={() => setFilters({...filters, progress: 'completed'})}
+                            >
+                                Completed
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="filter-group">
+                        <h3 className="filter-group-title">Reading Status</h3>
+                        <div className="filter-options">
+                            <button
+                                className={`filter-option ${filters.readingStatus === 'all' ? 'active' : ''}`}
+                                onClick={() => setFilters({...filters, readingStatus: 'all'})}
+                            >
+                                All
+                            </button>
+                            <button
+                                className={`filter-option ${filters.readingStatus === 'current' ? 'active' : ''}`}
+                                onClick={() => setFilters({...filters, readingStatus: 'current'})}
+                            >
+                                Currently Reading
+                            </button>
+                            <button
+                                className={`filter-option ${filters.readingStatus === 'toRead' ? 'active' : ''}`}
+                                onClick={() => setFilters({...filters, readingStatus: 'toRead'})}
+                            >
+                                To Read
+                            </button>
+                            <button
+                                className={`filter-option ${filters.readingStatus === 'finished' ? 'active' : ''}`}
+                                onClick={() => setFilters({...filters, readingStatus: 'finished'})}
+                            >
+                                Finished
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {sortedBooks.length > 0 ? (
                 <div className={`books-container ${viewMode}`}>
                     {viewMode === 'grid' ? (
@@ -111,13 +202,19 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
                                     <div className="book-cover" style={{backgroundColor: book.coverColor || '#4299e1'}}>
                                         <div className="book-cover-content">
                                             <div className="book-initials">
-                                                {book.title.split(' ').map(word => word[0]).join('').substring(0, 2)}
+                                                {book.title.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase()}
                                             </div>
                                         </div>
                                         <div className="progress-bar-container">
                                             <div className="progress-bar" style={{ width: `${book.progress}%` }}></div>
                                             <span className="progress-label">{book.progress}%</span>
                                         </div>
+                                        {book.progress === 100 && (
+                                            <div className="completed-badge">
+                                                <Star size={12} />
+                                                <span>Completed</span>
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="book-info">
                                         <h3 className="book-title">{book.title}</h3>
@@ -130,10 +227,19 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
                                         </div>
                                     </div>
                                     <div className="book-actions">
-                                        <button className="book-action-button primary">
+                                        <button
+                                            className="book-action-button primary"
+                                            onClick={() => handleContinueReading(book.id)}
+                                        >
                                             <BookOpen size={14} />
                                             <span>Continue</span>
-                                            <ChevronRight size={14} />
+                                        </button>
+                                        <button
+                                            className="book-action-button secondary"
+                                            onClick={() => handleDownload(book.id)}
+                                            title="Download for offline reading"
+                                        >
+                                            <Download size={14} />
                                         </button>
                                     </div>
                                 </div>
@@ -155,9 +261,16 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
                                     <div className="list-cell book-cell">
                                         <div className="list-book-info">
                                             <div className="mini-cover" style={{backgroundColor: book.coverColor || '#4299e1'}}>
-                                                <span>{book.title.split(' ').map(word => word[0]).join('').substring(0, 2)}</span>
+                                                <span>{book.title.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase()}</span>
                                             </div>
-                                            <span className="list-book-title">{book.title}</span>
+                                            <span className="list-book-title">
+                                                {book.title}
+                                                {book.progress === 100 && (
+                                                    <span className="list-completed-badge">
+                                                        <Star size={12} />
+                                                    </span>
+                                                )}
+                                            </span>
                                         </div>
                                     </div>
                                     <div className="list-cell author-cell">{book.author}</div>
@@ -165,15 +278,28 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
                                     <div className="list-cell progress-cell">
                                         <div className="list-progress-container">
                                             <div className="list-progress-bar">
-                                                <div className="list-progress-fill" style={{ width: `${book.progress}%` }}></div>
+                                                <div
+                                                    className={`list-progress-fill ${book.progress === 100 ? 'completed' : ''}`}
+                                                    style={{ width: `${book.progress}%` }}
+                                                ></div>
                                             </div>
                                             <span className="list-progress-text">{book.progress}%</span>
                                         </div>
                                     </div>
                                     <div className="list-cell actions-cell">
-                                        <button className="list-action-button">
+                                        <button
+                                            className="list-action-button primary"
+                                            onClick={() => handleContinueReading(book.id)}
+                                        >
                                             <BookOpen size={14} />
                                             <span>Read</span>
+                                        </button>
+                                        <button
+                                            className="list-action-button secondary"
+                                            onClick={() => handleDownload(book.id)}
+                                            title="Download for offline reading"
+                                        >
+                                            <Download size={14} />
                                         </button>
                                     </div>
                                 </div>
@@ -197,7 +323,16 @@ const BookshelfSection = ({ books = [], isDarkMode = false }) => {
             )}
 
             <div className="bookshelf-footer">
-                <p className="books-count">Showing {sortedBooks.length} of {books.length} books</p>
+                <div className="books-count">
+                    <span className="book-count-number">{sortedBooks.length}</span> of <span className="book-count-total">{books.length}</span> books
+                </div>
+
+                {books.length > 0 && (
+                    <div className="books-tip">
+                        <AlertCircle size={14} />
+                        <span>Books downloaded for offline use will expire after 30 days</span>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -6,8 +6,8 @@ import ProfileHeader from '../../components/profile/ProfileHeader';
 import PersonalInfo from '../../components/profile/PersonalInfo';
 import AccountSettings from '../../components/profile/AccountSettings';
 import RequestHistory from '../../components/profile/RequestHistory';
-import './Profile.css';
 import BookshelfSection from "../../components/profile/BookshelfSection";
+import './Profile.css';
 
 const Profile = ({ isDarkMode }) => {
     const [activeTab, setActiveTab] = useState('personal');
@@ -160,7 +160,7 @@ const Profile = ({ isDarkMode }) => {
                         ) : (
                             <>
                                 {activeTab === 'personal' && (
-                                    <PersonalInfo userData={userData} />
+                                    <PersonalInfo userData={userData} isDarkMode={isDarkMode} />
                                 )}
 
                                 {activeTab === 'bookshelf' && (
