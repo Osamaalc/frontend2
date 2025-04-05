@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, User, Clock, Calendar, Tag, Award, Star, BookMarked } from 'lucide-react';
+import { BookOpen, User, Clock, Calendar, Tag, Award, Star, BookMarked, ChevronLeft, ChevronRight } from 'lucide-react';
 import './BookGrid.css';
 
 const BookAccessStatus = {
@@ -13,6 +13,70 @@ const BookAccessStatus = {
 const EnhancedBookGrid = ({ books, loading, error, isDarkMode, onRequestAccess }) => {
     // State to track book access requests
     const [accessRequests, setAccessRequests] = useState({});
+
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const [booksPerPage, setBooksPerPage] = useState(6); // Initially show 6 books (2x3 grid)
+
+    // Calculate total pages
+    const totalPages = Math.ceil(books.length / booksPerPage);
+
+    // Get current books for display
+    const indexOfLastBook = currentPage * booksPerPage;
+    const indexOfFirstBook = indexOfLastBook - booksPerPage;
+    const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
+
+    // Update books per page based on screen size
+    useEffect(() => {
+        const handleResize = () => {
+            // Adjust how many books per row based on screen width
+            if (window.innerWidth >= 1200) {
+                // 4 books per row on large screens = 12 books (3 rows)
+                setBooksPerPage(12);
+            } else if (window.innerWidth >= 992) {
+                // 3 books per row on medium screens = 9 books (3 rows)
+                setBooksPerPage(9);
+            } else if (window.innerWidth >= 768) {
+                // 2 books per row on small screens = 6 books (3 rows)
+                setBooksPerPage(6);
+            } else {
+                // 1 book per row on mobile = 3 books (3 rows)
+                setBooksPerPage(3);
+            }
+        };
+
+        // Set initial value
+        handleResize();
+
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Handle page navigation
+    const goToNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+            // Scroll to top of grid
+            document.querySelector('.enhanced-books-grid')?.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const goToPreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+            // Scroll to top of grid
+            document.querySelector('.enhanced-books-grid')?.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const goToPage = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        // Scroll to top of grid
+        document.querySelector('.enhanced-books-grid')?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     if (loading) {
         return (
@@ -96,75 +160,153 @@ const EnhancedBookGrid = ({ books, loading, error, isDarkMode, onRequestAccess }
         }
     };
 
+    // Create an array of page numbers for pagination
+    const pageNumbers = [];
+    const maxPageButtons = 5; // Maximum number of page buttons to show
+
+    if (totalPages <= maxPageButtons) {
+        // If we have few pages, show all numbers
+        for (let i = 1; i <= totalPages; i++) {
+            pageNumbers.push(i);
+        }
+    } else {
+        // Always show first page
+        pageNumbers.push(1);
+
+        // Show pages around current page
+        let startPage = Math.max(2, currentPage - 1);
+        let endPage = Math.min(totalPages - 1, currentPage + 1);
+
+        // Add ellipsis if needed
+        if (startPage > 2) {
+            pageNumbers.push('...');
+        }
+
+        // Add middle pages
+        for (let i = startPage; i <= endPage; i++) {
+            pageNumbers.push(i);
+        }
+
+        // Add ellipsis if needed
+        if (endPage < totalPages - 1) {
+            pageNumbers.push('...');
+        }
+
+        // Always show last page
+        pageNumbers.push(totalPages);
+    }
+
     return (
-        <div className={`enhanced-books-grid ${isDarkMode ? 'dark' : ''}`}>
-            {books.map(book => (
-                <div className="enhanced-book-card" key={book.id}>
-                    <div
-                        className="book-cover"
-                        style={{ backgroundColor: book.coverColor || getRandomColor(book.id) }}
+        <div className="books-with-pagination">
+            <div className={`enhanced-books-grid ${isDarkMode ? 'dark' : ''}`}>
+                {currentBooks.map(book => (
+                    <div className="enhanced-book-card" key={book.id}>
+                        <div
+                            className="book-cover"
+                            style={{ backgroundColor: book.coverColor || getRandomColor(book.id) }}
+                        >
+                            {book.coverImage ? (
+                                <img src={book.coverImage} alt={`${book.title} cover`} className="cover-image" />
+                            ) : (
+                                <span className="book-initials">
+                                    {book.title.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase()}
+                                </span>
+                            )}
+                            {book.progress !== undefined && (
+                                <div className="book-progress">
+                                    <div
+                                        className="progress-bar"
+                                        style={{ width: `${book.progress}%` }}
+                                    ></div>
+                                    <span className="progress-text">{book.progress}%</span>
+                                </div>
+                            )}
+                            {book.rating && (
+                                <div className="book-rating">
+                                    <Star size={14} fill="#FFD700" stroke="#FFD700" />
+                                    <span>{book.rating}</span>
+                                </div>
+                            )}
+                        </div>
+                        <div className="book-details">
+                            <h3 className="book-title" title={book.title}>{book.title}</h3>
+                            <div className="book-author">
+                                <User size={14} />
+                                <span>{book.author}</span>
+                            </div>
+
+                            {book.description && (
+                                <p className="book-description">{book.description}</p>
+                            )}
+
+                            <div className="book-meta-info">
+                                {book.published && (
+                                    <div className="meta-item">
+                                        <Calendar size={14} />
+                                        <span>{book.published}</span>
+                                    </div>
+                                )}
+                                {book.category && (
+                                    <div className="meta-item">
+                                        <Tag size={14} />
+                                        <span>{book.category}</span>
+                                    </div>
+                                )}
+                                {book.university && (
+                                    <div className="meta-item">
+                                        <Award size={14} />
+                                        <span>{book.university}</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="book-actions">
+                            {getAccessStatusUI(book)}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+                <div className={`pagination-controls ${isDarkMode ? 'dark' : ''}`}>
+                    <button
+                        className={`pagination-arrow ${currentPage === 1 ? 'disabled' : ''}`}
+                        onClick={goToPreviousPage}
+                        disabled={currentPage === 1}
                     >
-                        {book.coverImage ? (
-                            <img src={book.coverImage} alt={`${book.title} cover`} className="cover-image" />
-                        ) : (
-                            <span className="book-initials">
-                {book.title.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase()}
-              </span>
-                        )}
-                        {book.progress !== undefined && (
-                            <div className="book-progress">
-                                <div
-                                    className="progress-bar"
-                                    style={{ width: `${book.progress}%` }}
-                                ></div>
-                                <span className="progress-text">{book.progress}%</span>
-                            </div>
-                        )}
-                        {book.rating && (
-                            <div className="book-rating">
-                                <Star size={14} fill="#FFD700" stroke="#FFD700" />
-                                <span>{book.rating}</span>
-                            </div>
-                        )}
-                    </div>
-                    <div className="book-details">
-                        <h3 className="book-title" title={book.title}>{book.title}</h3>
-                        <div className="book-author">
-                            <User size={14} />
-                            <span>{book.author}</span>
-                        </div>
+                        <ChevronLeft size={20} />
+                    </button>
 
-                        {book.description && (
-                            <p className="book-description">{book.description}</p>
-                        )}
-
-                        <div className="book-meta-info">
-                            {book.published && (
-                                <div className="meta-item">
-                                    <Calendar size={14} />
-                                    <span>{book.published}</span>
-                                </div>
-                            )}
-                            {book.category && (
-                                <div className="meta-item">
-                                    <Tag size={14} />
-                                    <span>{book.category}</span>
-                                </div>
-                            )}
-                            {book.university && (
-                                <div className="meta-item">
-                                    <Award size={14} />
-                                    <span>{book.university}</span>
-                                </div>
-                            )}
-                        </div>
+                    <div className="pagination-numbers">
+                        {pageNumbers.map((number, index) => (
+                            number === '...' ?
+                                <span key={`ellipsis-${index}`} className="pagination-ellipsis">...</span> :
+                                <button
+                                    key={number}
+                                    className={`pagination-number ${currentPage === number ? 'active' : ''}`}
+                                    onClick={() => goToPage(number)}
+                                >
+                                    {number}
+                                </button>
+                        ))}
                     </div>
 
-                    <div className="book-actions">
-                        {getAccessStatusUI(book)}
-                    </div>
+                    <button
+                        className={`pagination-arrow ${currentPage === totalPages ? 'disabled' : ''}`}
+                        onClick={goToNextPage}
+                        disabled={currentPage === totalPages}
+                    >
+                        <ChevronRight size={20} />
+                    </button>
                 </div>
-            ))}
+            )}
+
+            {/* Page indicator */}
+            <div className={`pagination-info ${isDarkMode ? 'dark' : ''}`}>
+                Showing {indexOfFirstBook + 1}-{Math.min(indexOfLastBook, books.length)} of {books.length} books
+            </div>
         </div>
     );
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { BookOpen, Grid, ChevronRight } from 'lucide-react';
 import './UniversityRow.css';
 
 const UniversityRow = ({ isDarkMode }) => {
@@ -201,20 +202,26 @@ const UniversityRow = ({ isDarkMode }) => {
                         </Link>
                     ))}
 
-                    {/* View All Card */}
+                    {/* Enhanced View All Card */}
                     {universities.length > visibleUniversities && (
                         <Link to="/universities" className="university-card view-all-card">
                             <div className="university-logo-wrapper">
                                 <div className="university-logo all">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                                    </svg>
+                                    <Grid size={38} strokeWidth={1.5} />
                                 </div>
                             </div>
                             <div className="university-info">
-                                <h3 className="university-name">View All</h3>
-                                <p className="university-location">Total: {pagination.totalElements}</p>
+                                <h3 className="university-name">All Universities</h3>
+                                <p className="university-location">Discover Our Complete Collection</p>
+                                <div className="university-meta">
+                                    <div className="view-all-count">
+                                        <span>{universities.length} Universities Available</span>
+                                    </div>
+                                </div>
+                                <button className="view-all-btn">
+                                    <span>Explore All</span>
+                                    <ChevronRight size={18} />
+                                </button>
                             </div>
                         </Link>
                     )}

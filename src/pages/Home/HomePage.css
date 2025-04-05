@@ -91,7 +91,6 @@
 .search-bar {
     position: relative;
     width: 100%;
-    max-width: 500px;
 }
 
 .search-icon {
@@ -160,7 +159,7 @@
     background-color: #4a5568;
 }
 
-/* Content Grid */
+/* Content Grid (old layout) */
 .content-grid {
     display: grid;
     grid-template-columns: 260px 1fr;
@@ -179,7 +178,9 @@
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
+    margin-top: 0.5rem;
 }
+
 .books-header h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
@@ -480,8 +481,6 @@
     background-color: #dc2626;
 }
 
-/* تمت إزالة أنماط زر التفاصيل لأننا لم نعد نستخدمه */
-
 /* Loading States */
 .books-loading {
     display: flex;
@@ -657,9 +656,128 @@
     }
 }
 
-.book-actions {
+/* New improved layout */
+.improved-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+}
+
+/* Main content area that holds search and books */
+.main-content-area {
     display: flex;
-    padding: 1rem;
-    border-top: 1px solid #f1f5f9;
-    width: 100%;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Row that contains filters button and search */
+.filters-search-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Make search bar grow to fill available space */
+.filters-search-row .search-bar {
+    flex-grow: 1;
+}
+
+/* Mobile filters toggle button */
+.mobile-filters-toggle {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.25rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-filters-toggle.dark {
+    background: #1f2937;
+    color: #e5e7eb;
+    border-color: #374151;
+}
+
+.mobile-filters-toggle:hover {
+    background: #f8fafc;
+}
+
+.mobile-filters-toggle.dark:hover {
+    background: #2d3748;
+}
+
+/* Mobile sidebar overlay */
+.mobile-sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 40;
+}
+
+/* Responsive styles for the improved layout */
+@media (max-width: 992px) {
+    .improved-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 50;
+        margin: 0;
+    }
+
+    .sidebar-container.mobile-active {
+        display: block;
+    }
+
+    .mobile-filters-toggle {
+        display: flex;
+    }
+
+    .mobile-sidebar-overlay {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .filters-search-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .mobile-filters-toggle {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+}
+
+/* Ensure the CategorySidebar expands properly */
+.sidebar-container {
+    height: 100%;
+}
+
+.category-sidebar {
+    height: 100%;
+    position: sticky;
+    top: 1rem;
 }
