@@ -1,0 +1,268 @@
+/* استيراد خطوط جديدة أكثر جمالاً وحداثة */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.category-sidebar {
+    width: 280px; /* زيادة العرض قليلاً */
+    background: white;
+    border-radius: 16px; /* زيادة انحناء الزوايا */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* تحسين الظل */
+    overflow-y: auto;
+    max-height: 100%;
+    position: static;
+    font-family: 'Poppins', sans-serif; /* خط جديد */
+    border: none; /* إزالة الحدود الظاهرة */
+    transition: all 0.3s ease;
+    z-index: 10;
+    margin-right: 20px; /* هامش للفصل عن المحتوى الرئيسي */
+}
+
+.category-sidebar.dark {
+    background: #1f2937; /* لون داكن أغمق وأكثر جاذبية */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-header {
+    padding: 1.5rem; /* زيادة التباعد */
+    border-bottom: 1px solid #f3f4f6; /* تخفيف لون الحدود */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-sidebar.dark .sidebar-header {
+    border-bottom-color: #374151;
+}
+
+.sidebar-header h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #111827; /* لون أغمق للنص */
+    margin: 0;
+    letter-spacing: -0.5px; /* تقليل المسافة بين الحروف */
+}
+
+.category-sidebar.dark .sidebar-header h2 {
+    color: #f9fafb;
+}
+
+.close-sidebar {
+    display: none;
+    background: none;
+    border: none;
+    color: #4b5563;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.2s ease;
+}
+
+.close-sidebar:hover {
+    color: #111827;
+}
+
+.category-sidebar.dark .close-sidebar {
+    color: #9ca3af;
+}
+
+.category-sidebar.dark .close-sidebar:hover {
+    color: #f9fafb;
+}
+
+.all-categories-button {
+    padding: 0.75rem 1rem;
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.9rem 0.75rem; /* تقليل التباعد من اليسار واليمين */
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 500; /* خط أكثر سمكًا */
+    color: #111827;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 10px; /* زيادة انحناء الزوايا */
+}
+
+.category-sidebar.dark .category-item {
+    color: #e5e7eb;
+}
+
+.category-item:hover {
+    background: #f9fafb; /* لون أفتح عند التحويم */
+}
+
+.category-sidebar.dark .category-item:hover {
+    background: #2d3748;
+}
+
+.category-item.active {
+    background: #eef2ff; /* لون أكثر نعومة للعنصر النشط */
+    color: #4f46e5; /* لون بنفسجي أنيق */
+    font-weight: 600;
+}
+
+.category-sidebar.dark .category-item.active {
+    background: rgba(79, 70, 229, 0.15);
+    color: #818cf8;
+}
+
+.categories-list {
+    padding: 0.75rem 0.5rem; /* زيادة التباعد الجانبي */
+}
+
+.category-group {
+    margin-bottom: 0.75rem;
+}
+
+.category-group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.85rem 0.75rem; /* تقليل التباعد من اليسار واليمين */
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600; /* خط أكثر سمكًا */
+    color: #111827;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 10px;
+}
+
+.category-sidebar.dark .category-group-header {
+    color: #e5e7eb;
+}
+
+.category-group-header:hover {
+    background: #f9fafb;
+}
+
+.category-sidebar.dark .category-group-header:hover {
+    background: #2d3748;
+}
+
+.subcategory-list {
+    padding-left: 1.5rem; /* تقليل المسافة البادئة من اليسار */
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem; /* المسافة بين العناصر الفرعية */
+    padding-bottom: 0.75rem;
+}
+
+.subcategory-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.65rem 0.5rem; /* تقليل التباعد من اليسار واليمين */
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 0.925rem;
+    font-weight: 400;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.category-sidebar.dark .subcategory-item {
+    color: #9ca3af;
+}
+
+.subcategory-item:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+.category-sidebar.dark .subcategory-item:hover {
+    background: #2d3748;
+    color: #e5e7eb;
+}
+
+.subcategory-item.active {
+    background: #eef2ff;
+    color: #4f46e5; /* لون بنفسجي أنيق */
+    font-weight: 500;
+}
+
+.category-sidebar.dark .subcategory-item.active {
+    background: rgba(79, 70, 229, 0.15);
+    color: #818cf8;
+}
+
+/* زر التبديل للجوال */
+.category-toggle-button {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.5rem;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    font-family: 'Poppins', sans-serif;
+}
+
+.category-toggle-button.dark {
+    background: #1f2937;
+    color: #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* الطبقة المتراكبة للجوال */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* زيادة الشفافية قليلاً */
+    backdrop-filter: blur(2px); /* تأثير ضبابي للخلفية */
+    z-index: 40;
+}
+
+/* استجابة للجوال */
+@media (max-width: 992px) {
+    .category-toggle-button {
+        display: flex;
+    }
+
+    .category-sidebar {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        bottom: 0;
+        width: 300px; /* زيادة عرض الشريط على الجوال */
+        max-height: 100vh;
+        border-radius: 0;
+        z-index: 100;
+        transition: left 0.3s ease;
+        margin-right: 0;
+    }
+
+    .category-sidebar.open {
+        left: 0;
+    }
+
+    .close-sidebar {
+        display: block;
+    }
+
+    .sidebar-overlay {
+        display: block;
+    }
+}

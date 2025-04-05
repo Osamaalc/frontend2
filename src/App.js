@@ -4,8 +4,9 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Profile from './pages/Profile/Profile';
 import Contact from './pages/Contact/Contact';
-import './styles/global.css';
 import About from "./pages/About";
+import HomePage from './pages/Home/HomePage'; // Import the new HomePage component
+import './styles/global.css';
 
 function App() {
     const [darkMode, setDarkMode] = useState(false);
@@ -25,6 +26,22 @@ function App() {
         <BrowserRouter>
             <div className={`app ${darkMode ? 'dark' : ''}`}>
                 <Routes>
+                    <Route path="/" element={
+                        <>
+                            <Header isDarkMode={darkMode} toggleTheme={toggleDarkMode} />
+                            <HomePage isDarkMode={darkMode} />
+                            <Footer isDarkMode={darkMode} />
+                        </>
+                    } />
+
+                    <Route path="/university/:universityId" element={
+                        <>
+                            <Header isDarkMode={darkMode} toggleTheme={toggleDarkMode} />
+                            <HomePage isDarkMode={darkMode} />
+                            <Footer isDarkMode={darkMode} />
+                        </>
+                    } />
+
                     <Route path="/profile" element={
                         <>
                             <Header isDarkMode={darkMode} toggleTheme={toggleDarkMode} />
@@ -53,7 +70,11 @@ function App() {
                         <>
                             <Header isDarkMode={darkMode} toggleTheme={toggleDarkMode} />
                             <main className="empty-content">
-                                {/* المحتوى الافتراضي الفارغ */}
+                                {/* Default/404 content */}
+                                <div className="container" style={{textAlign: 'center', padding: '4rem 1rem'}}>
+                                    <h1>Page Not Found</h1>
+                                    <p>The page you are looking for doesn't exist or has been moved.</p>
+                                </div>
                             </main>
                             <Footer isDarkMode={darkMode} />
                         </>

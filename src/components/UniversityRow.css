@@ -1,0 +1,578 @@
+.university-row-container.dark .university-name {
+    color: #f1f5f9;
+}
+
+.university-row-container.dark .university-name::after {
+    background: linear-gradient(to right, #6366f1, #a855f7);
+}
+
+.university-row-container.dark .university-location {
+    color: #94a3b8;
+}/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.university-row-container {
+    font-family: 'Poppins', sans-serif;
+    padding: 3rem 0;
+    background-color: #f8f9ff;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.university-row-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+}
+
+.university-row-container.dark {
+    background-color: #111827;
+    color: #f3f4f6;
+}
+
+.university-row-container.dark::before {
+    background: linear-gradient(90deg, #6366f1, #a855f7);
+}
+
+.universities-header {
+    max-width: 1400px;
+    margin: 0 auto 2.5rem;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.universities-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1e293b;
+    position: relative;
+    letter-spacing: -0.5px;
+}
+
+.university-row-container.dark .universities-header h2 {
+    color: #f1f5f9;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.universities-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(to right, #3a7bd5, #00d2ff);
+    border-radius: 4px;
+}
+
+.university-row-container.dark .universities-header h2::after {
+    background: linear-gradient(to right, #6366f1, #a855f7);
+}
+
+.remaining-count {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #6b7280;
+    background-color: #f1f5f9;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.university-row-container.dark .remaining-count {
+    color: #d1d5db;
+    background-color: #1f2937;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.universities-scroll {
+    padding: 1rem 0;
+    margin: 0 -1rem;
+}
+
+.universities-list {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1.75rem;
+    padding: 0.5rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+@media (max-width: 1200px) {
+    .universities-list {
+        flex-wrap: wrap;
+    }
+}
+
+.university-card {
+    flex: 1;
+    max-width: 280px;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05),
+    0 5px 15px rgba(0, 0, 0, 0.03);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    border: 1px solid rgba(229, 231, 235, 0.7);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.university-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+    rgba(58, 123, 213, 0.05),
+    rgba(0, 210, 255, 0.05));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.university-row-container.dark .university-card::after {
+    background: linear-gradient(135deg,
+    rgba(99, 102, 241, 0.05),
+    rgba(168, 85, 247, 0.05));
+}
+
+.university-card:hover::after {
+    opacity: 1;
+}
+
+.university-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(to right, #3a7bd5, #00d2ff);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.university-row-container.dark .university-card::before {
+    background: linear-gradient(to right, #6366f1, #a855f7);
+}
+
+.university-card:hover::before {
+    transform: scaleX(1);
+}
+
+.university-row-container.dark .university-card {
+    background: #1f2937;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2),
+    0 6px 12px rgba(0, 0, 0, 0.1);
+    border-color: rgba(75, 85, 99, 0.4);
+}
+
+.university-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12),
+    0 10px 20px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 210, 255, 0.3);
+}
+
+.university-row-container.dark .university-card:hover {
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3),
+    0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.university-logo-wrapper {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.university-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+    box-shadow: 0 10px 30px rgba(0, 210, 255, 0.25),
+    0 0 0 1px rgba(0, 210, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    transform-style: preserve-3d;
+}
+
+.university-card:hover .university-logo {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 210, 255, 0.35),
+    0 0 0 2px rgba(0, 210, 255, 0.1);
+}
+
+.university-row-container.dark .university-logo {
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.2);
+}
+
+.university-logo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 60%);
+}
+
+.university-logo.all {
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+    box-shadow: 0 8px 20px rgba(0, 210, 255, 0.2);
+}
+
+.university-row-container.dark .university-logo.all {
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.2);
+}
+
+.university-info {
+    text-align: center;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.university-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    letter-spacing: -0.5px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.university-name::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(to right, #3a7bd5, #00d2ff);
+    border-radius: 2px;
+}
+
+.university-location {
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.university-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed rgba(203, 213, 225, 0.5);
+}
+
+.library-name, .books-count {
+    font-size: 0.85rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.library-name::before, .books-count::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.library-name::before {
+    background-color: #3a7bd5;
+}
+
+.books-count::before {
+    background-color: #00d2ff;
+}
+
+.view-books-btn {
+    margin-top: 1.2rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 210, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.view-books-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.view-books-btn:hover::before {
+    opacity: 1;
+}
+
+.view-books-btn::after {
+    content: '';
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'%3E%3C/path%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'%3E%3C/path%3E%3C/svg%3E");
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-right: 8px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.view-books-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 210, 255, 0.35);
+}
+
+/* View all card special styling */
+.university-card.view-all-card {
+    background: linear-gradient(145deg, rgba(241, 245, 249, 0.7), rgba(248, 250, 252, 0.7));
+    border: 2px dashed rgba(203, 213, 225, 0.7);
+}
+
+.university-row-container.dark .university-card.view-all-card {
+    background: linear-gradient(145deg, rgba(31, 41, 55, 0.7), rgba(17, 24, 39, 0.7));
+    border: 2px dashed rgba(75, 85, 99, 0.7);
+}
+
+.university-card.view-all-card:hover {
+    border: 2px dashed rgba(0, 210, 255, 0.7);
+}
+
+.university-row-container.dark .university-card.view-all-card:hover {
+    border: 2px dashed rgba(168, 85, 247, 0.7);
+}
+
+.university-card.view-all-card .university-logo {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+}
+
+.university-row-container.dark .university-card.view-all-card .university-logo {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+}
+
+.university-card.view-all-card .university-name {
+    color: #ef4444;
+}
+
+.university-row-container.dark .university-card.view-all-card .university-name {
+    color: #f87171;
+}
+
+/* Loading state */
+.universities-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid rgba(58, 123, 213, 0.1);
+    border-top-color: #3a7bd5;
+    animation: spin 1s infinite linear;
+    margin-bottom: 1.5rem;
+}
+
+.university-row-container.dark .loading-spinner {
+    border: 3px solid rgba(99, 102, 241, 0.1);
+    border-top-color: #6366f1;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.universities-loading p {
+    color: #64748b;
+    font-size: 1rem;
+}
+
+.university-row-container.dark .universities-loading p {
+    color: #94a3b8;
+}
+
+/* Error state */
+.universities-error {
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #ef4444;
+}
+
+.retry-button {
+    margin-top: 1.5rem;
+    padding: 0.75rem 2rem;
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.2);
+}
+
+.university-row-container.dark .retry-button {
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2);
+}
+
+.retry-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
+}
+
+.university-row-container.dark .retry-button:hover {
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .universities-header h2 {
+        font-size: 2rem;
+    }
+
+    .university-card {
+        min-width: 240px;
+        padding: 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .universities-header {
+        padding: 0 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .universities-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .university-card {
+        min-width: 220px;
+        padding: 1.5rem;
+    }
+
+    .university-logo {
+        width: 80px;
+        height: 80px;
+        font-size: 1.7rem;
+    }
+
+    .university-name {
+        font-size: 1.1rem;
+    }
+
+    .university-location {
+        font-size: 0.85rem;
+    }
+
+    .universities-list {
+        padding: 0.5rem 1.5rem;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .universities-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .remaining-count {
+        font-size: 0.8rem;
+    }
+
+    .university-card {
+        min-width: 200px;
+        padding: 1.25rem;
+    }
+
+    .university-logo {
+        width: 70px;
+        height: 70px;
+        font-size: 1.5rem;
+    }
+
+    .university-name {
+        font-size: 1rem;
+    }
+
+    .universities-list {
+        padding: 0.5rem 1rem;
+        gap: 1.25rem;
+    }
+}
